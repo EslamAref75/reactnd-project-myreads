@@ -3,6 +3,11 @@ import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
 
 function BookList({ books, handleChange }) {
+  const shelves = [
+    { title: "Currently Reading", key: "currentlyReading" },
+    { title: "Want To Read", key: "wantToRead" },
+    { title: "Read", key: "read" },
+  ];
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -11,21 +16,15 @@ function BookList({ books, handleChange }) {
       <div className="list-books-content">
         <div>
           <div className="bookshelf">
-            <h2 className="bookshelf-title">Currently Reading</h2>
-            <BookShelf
-              books={books.filter((book) => book.shelf === "currentlyReading")}
-              handleChange={handleChange}
-            />
-            <h2 className="bookshelf-title">Want to Read</h2>
-            <BookShelf
-              books={books.filter((book) => book.shelf === "wantToRead")}
-              handleChange={handleChange}
-            />
-            <h2 className="bookshelf-title">Read</h2>
-            <BookShelf
-              books={books.filter((book) => book.shelf === "read")}
-              handleChange={handleChange}
-            />
+            {shelves.map((shelf) => (
+              <React.Fragment key={shelf.key}>
+                <h2 className="bookshelf-title">{shelf.title}</h2>
+                <BookShelf
+                  books={books.filter((book) => book.shelf === shelf.key)}
+                  handleChange={handleChange}
+                />
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </div>
